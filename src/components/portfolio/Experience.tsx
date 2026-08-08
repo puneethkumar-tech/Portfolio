@@ -1,51 +1,78 @@
-import { Briefcase } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { experience } from "@/lib/portfolio-data";
 import { Section } from "./Section";
 import { Reveal } from "./Reveal";
 
 export function Experience() {
+  const ref = useRef<HTMLOListElement>(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setProgress(1);
+      return;
+    }
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const r = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const p = (vh * 0.75 - r.top) / Math.max(r.height, 1);
+        setProgress(Math.min(1, Math.max(0, p)));
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <Section
       id="experience"
+      index="04"
       eyebrow="Experience"
-      title="Internships"
-      description="Short, hands-on roles where I worked on real tasks alongside my coursework."
+      title="Internships, in order"
+      description="Short, hands-on roles worked alongside coursework."
     >
-      <ol className="relative space-y-6 pl-6 sm:pl-8">
+      <ol ref={ref} className="relative pl-8 sm:pl-12">
+        <span aria-hidden="true" className="absolute left-0 top-1 h-full w-px bg-hairline" />
         <span
           aria-hidden="true"
-          className="absolute left-[7px] top-2 h-[calc(100%-1rem)] w-px bg-gradient-to-b from-primary/70 via-hairline to-transparent"
+          className="absolute left-0 top-1 w-px origin-top bg-gradient-to-b from-primary to-accent transition-transform duration-200 ease-out"
+          style={{ height: "100%", transform: `scaleY(${progress})` }}
         />
         {experience.map((item, i) => (
-          <Reveal key={item.org} delay={i * 100} as="li" className="relative">
+          <Reveal key={item.org} as="li" delay={i * 100} className="relative pb-14 last:pb-0">
             <span
               aria-hidden="true"
-              className="absolute -left-6 top-6 grid h-4 w-4 place-items-center rounded-full border border-primary/50 bg-background sm:-left-8"
+              className="absolute -left-8 top-2 grid h-3 w-3 place-items-center rounded-full border border-primary/60 bg-background sm:-left-12"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              <span className="h-1 w-1 rounded-full bg-primary" />
             </span>
-            <div className="glass card-hover rounded-2xl p-6">
-              <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4">
-                <div className="min-w-0">
-                  <h3 className="truncate font-display text-lg font-semibold">{item.role}</h3>
-                  <p className="mt-1 flex items-center gap-2 text-sm text-primary">
-                    <Briefcase className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    {item.org}
-                  </p>
-                </div>
-                <span className="shrink-0 rounded-full border border-hairline bg-surface px-3 py-1 font-mono text-xs text-muted-foreground">
-                  {item.duration}
-                </span>
-              </div>
-              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                {item.points.map((p) => (
-                  <li key={p} className="flex gap-2">
-                    <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
+
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <h3 className="font-display text-2xl leading-tight sm:text-3xl">{item.role}</h3>
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                {item.duration}
+              </span>
             </div>
+            <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-primary">
+              {item.org}
+            </p>
+            <ul className="mt-5 max-w-2xl space-y-2.5 border-l border-hairline pl-5 text-sm leading-relaxed text-muted-foreground">
+              {item.points.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
           </Reveal>
         ))}
       </ol>

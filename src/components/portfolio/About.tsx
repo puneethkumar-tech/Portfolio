@@ -74,7 +74,7 @@ export function About() {
               ))}
             </dl>
             <p className="mt-6 border-t border-hairline pt-5 text-sm leading-relaxed text-muted-foreground">
-              {profile.degreeNote ?? education.degree}
+              {education.degree} · {education.period}
             </p>
           </div>
         </Reveal>
