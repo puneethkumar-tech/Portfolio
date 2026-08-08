@@ -1,113 +1,84 @@
-import { Brain, Cloud, Code2, Compass, Cpu, GraduationCap, Sparkles } from "lucide-react";
-import { education, exploring, profile, roadmap } from "@/lib/portfolio-data";
+import { education, profile, roadmap } from "@/lib/portfolio-data";
 import { Section } from "./Section";
 import { Reveal } from "./Reveal";
 
-const highlights = [
-  { icon: Code2, label: "Full-stack development", detail: "React, Next.js, Node.js, databases" },
-  { icon: Brain, label: "AI integration", detail: "Adding AI to practical web apps" },
-  { icon: Cloud, label: "Cloud & deployment", detail: "Vercel, Render, Railway, Docker basics" },
-  { icon: Cpu, label: "Scalable systems", detail: "Learning system design fundamentals" },
+const currently = [
+  { k: "Currently", v: "2nd Year · 3rd Semester" },
+  { k: "Goal", v: "Full Stack AI Developer" },
+  { k: "Based in", v: "Kandukuru, Andhra Pradesh, India" },
 ];
 
 export function About() {
   return (
     <Section
       id="about"
+      index="01"
       eyebrow="About"
-      title="Student now, building like it's production"
-      description="A short, honest snapshot of where I am and where I'm heading."
+      title={
+        <>
+          I learn by building things that <span className="text-ember">actually run</span>.
+        </>
+      }
     >
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <Reveal className="glass rounded-3xl p-6 sm:p-8">
-          <div className="space-y-4 text-base leading-relaxed text-muted-foreground">
-            <p>
-              I&apos;m Puneeth, a second-year Computer Science and Engineering student at{" "}
-              {education.institution}. I&apos;m passionate about full-stack development, AI
-              integration, cloud technologies, and scalable software systems.
-            </p>
-            <p>
-              I enjoy turning ideas into practical applications and I learn mostly by building —
-              through personal projects, internships, and online courses. Each project teaches me
-              something I couldn&apos;t get from a tutorial alone.
-            </p>
-            <p>
-              My long-term goal is to become a{" "}
-              <span className="text-foreground">Full Stack AI Developer</span>, building
-              intelligent applications that solve meaningful real-world problems.
-            </p>
-          </div>
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-16">
+        <Reveal className="space-y-6">
+          <p className="font-display text-xl leading-snug text-foreground sm:text-2xl">
+            I&apos;m Puneeth — a second-year Computer Science and Engineering student at{" "}
+            {education.institution}, learning by building real full-stack applications.
+          </p>
+          <p className="text-base leading-relaxed text-muted-foreground">
+            My interest sits where full-stack development meets AI: web applications that do
+            something useful, not demos that only work on a slide. Most of what I know came from
+            shipping — personal projects, two internships, and a lot of debugging at 1am.
+          </p>
+          <p className="text-base leading-relaxed text-muted-foreground">
+            Long term, I want to be a{" "}
+            <span className="text-foreground">Full Stack AI Developer</span> — building intelligent
+            products end to end, from database schema to interface detail.
+          </p>
 
-          <dl className="mt-8 grid gap-4 sm:grid-cols-2">
-            {highlights.map(({ icon: Icon, label, detail }) => (
-              <div key={label} className="rounded-2xl border border-hairline bg-surface p-4">
-                <dt className="flex items-center gap-2 text-sm font-medium text-foreground">
-                  <Icon className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-                  {label}
-                </dt>
-                <dd className="mt-1 text-sm text-muted-foreground">{detail}</dd>
-              </div>
+          <ol className="mt-10 space-y-0 border-t border-hairline">
+            {roadmap.map((r, i) => (
+              <li
+                key={r.period}
+                className="group grid gap-2 border-b border-hairline py-5 sm:grid-cols-[6rem_minmax(0,1fr)] sm:gap-6"
+              >
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary">
+                  {r.period}
+                </span>
+                <div className="min-w-0">
+                  <p className="font-display text-base font-medium text-foreground">
+                    {r.title}
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{r.detail}</p>
+                </div>
+                <span className="sr-only">{i + 1}</span>
+              </li>
             ))}
-          </dl>
+          </ol>
         </Reveal>
 
-        <div className="space-y-6">
-          <Reveal delay={80} className="glass rounded-3xl p-6 sm:p-8">
-            <h3 className="flex items-center gap-2 text-lg font-semibold">
-              <GraduationCap className="h-5 w-5 text-primary" aria-hidden="true" />
-              Quick facts
-            </h3>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li>
-                <span className="text-foreground">Studying:</span> {education.degree}
-              </li>
-              <li>
-                <span className="text-foreground">Year:</span> {education.note}
-              </li>
-              <li>
-                <span className="text-foreground">Based in:</span> {profile.location}
-              </li>
-              <li>
-                <span className="text-foreground">Focus:</span> {profile.positioning}
-              </li>
-            </ul>
-          </Reveal>
-
-          <Reveal delay={160} className="glass rounded-3xl p-6 sm:p-8">
-            <h3 className="flex items-center gap-2 text-lg font-semibold">
-              <Compass className="h-5 w-5 text-primary" aria-hidden="true" />
-              Growth roadmap
-            </h3>
-            <ol className="mt-4 space-y-4">
-              {roadmap.map((r) => (
-                <li key={r.period} className="relative pl-6">
-                  <span className="absolute left-0 top-1.5 h-2 w-2 rounded-full bg-primary" />
-                  <p className="font-mono text-xs text-primary">{r.period}</p>
-                  <p className="mt-1 text-sm font-medium text-foreground">{r.title}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{r.detail}</p>
-                </li>
+        <Reveal delay={120} className="lg:pt-2">
+          <div className="panel grain sticky top-28 p-6">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
+              Currently
+            </p>
+            <dl className="mt-6 space-y-5">
+              {currently.map((c) => (
+                <div key={c.k} className="border-b border-hairline pb-5 last:border-0 last:pb-0">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
+                    {c.k}
+                  </dt>
+                  <dd className="mt-1.5 font-display text-base text-foreground">{c.v}</dd>
+                </div>
               ))}
-            </ol>
-          </Reveal>
-        </div>
+            </dl>
+            <p className="mt-6 border-t border-hairline pt-5 text-sm leading-relaxed text-muted-foreground">
+              {education.degree} · {education.period}
+            </p>
+          </div>
+        </Reveal>
       </div>
-
-      <Reveal delay={120} className="glass mt-6 rounded-3xl p-6 sm:p-8">
-        <h3 className="flex items-center gap-2 text-lg font-semibold">
-          <Sparkles className="h-5 w-5 text-primary" aria-hidden="true" />
-          Currently exploring
-        </h3>
-        <ul className="mt-4 flex flex-wrap gap-2">
-          {exploring.map((item) => (
-            <li
-              key={item}
-              className="rounded-full border border-dashed border-hairline bg-surface px-3 py-1.5 text-sm text-muted-foreground"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </Reveal>
     </Section>
   );
 }

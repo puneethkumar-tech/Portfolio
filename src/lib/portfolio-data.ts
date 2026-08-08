@@ -24,12 +24,13 @@ export const profile = {
 
 export const navItems = [
   { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Stack", href: "#skills" },
+  { label: "Experience", href: "#experience" },
   { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
+
 
 export type ProjectStatus = "live" | "in-development" | "coming-soon";
 
