@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navItems, profile } from "@/lib/portfolio-data";
 import { cn } from "@/lib/utils";
 
@@ -9,11 +9,18 @@ export function Navbar() {
   const [active, setActive] = useState<string>("");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 32);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   useEffect(() => {
     const sections = navItems
@@ -33,75 +40,111 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:pt-4">
-      <nav
-        aria-label="Main"
+    <>
+      <header
         className={cn(
-          "mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-2xl px-4 py-3 transition-all duration-500",
-          scrolled ? "glass shadow-elevated" : "border border-transparent",
+          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+          scrolled
+            ? "border-b border-hairline bg-background/70 backdrop-blur-xl"
+            : "border-b border-transparent",
         )}
       >
-        <a
-          href="#top"
-          className="flex min-w-0 items-center gap-2 font-display text-sm font-semibold tracking-tight"
+        <nav
+          aria-label="Main"
+          className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-4"
         >
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-hairline bg-surface-strong font-mono text-xs text-primary">
-            TP
-          </span>
-          <span className="truncate">{profile.shortName}</span>
-        </a>
+          <a href="#top" className="group flex min-w-0 items-center gap-3">
+            <span className="relative grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-sm border border-hairline font-mono text-[11px] text-primary">
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 bg-primary/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              />
+              TP
+            </span>
+            <span className="truncate font-display text-sm font-semibold tracking-tight">
+              {profile.shortName}
+              <span className="text-muted-foreground">.dev</span>
+            </span>
+          </a>
 
-        <ul className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                className={cn(
-                  "rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground",
-                  active === item.href && "bg-surface-strong text-foreground",
-                )}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <a
-          href={`mailto:${profile.email}`}
-          className="hidden rounded-xl border border-hairline bg-surface-strong px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:text-primary md:inline-flex"
-        >
-          Get in touch
-        </a>
-
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-label={open ? "Close menu" : "Open menu"}
-          className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-hairline bg-surface-strong md:hidden"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </nav>
-
-      {open && (
-        <div className="glass mx-auto mt-2 max-w-5xl rounded-2xl p-2 md:hidden">
-          <ul className="flex flex-col">
+          <ul className="hidden items-center gap-7 md:flex">
             {navItems.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl px-4 py-3 text-base text-muted-foreground transition-colors hover:bg-surface-strong hover:text-foreground"
+                  className={cn(
+                    "relative py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground",
+                    active === item.href && "text-foreground",
+                  )}
                 >
+                  {item.label}
+                  <span
+                    aria-hidden="true"
+                    className={cn(
+                      "absolute -bottom-0.5 left-0 h-px w-full origin-left bg-primary transition-transform duration-300",
+                      active === item.href ? "scale-x-100" : "scale-x-0",
+                    )}
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={`mailto:${profile.email}`}
+            className="hidden items-center gap-1.5 border-b border-primary/40 pb-0.5 font-mono text-[11px] uppercase tracking-[0.18em] text-primary transition-colors hover:border-primary md:inline-flex"
+          >
+            Get in touch <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-sm border border-hairline bg-surface md:hidden"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </nav>
+      </header>
+
+      {/* Mobile overlay navigation */}
+      <div
+        className={cn(
+          "fixed inset-0 z-40 bg-background/95 backdrop-blur-2xl transition-all duration-500 md:hidden",
+          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+        )}
+      >
+        <div className="flex h-full flex-col justify-between px-6 pb-10 pt-28">
+          <ul className="flex flex-col">
+            {navItems.map((item, i) => (
+              <li key={item.href} className="border-b border-hairline">
+                <a
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  style={{ transitionDelay: open ? `${80 + i * 45}ms` : "0ms" }}
+                  className={cn(
+                    "flex items-baseline gap-4 py-5 font-display text-3xl transition-all duration-500",
+                    open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
+                  )}
+                >
+                  <span className="font-mono text-[11px] text-primary">
+                    0{i + 1}
+                  </span>
                   {item.label}
                 </a>
               </li>
             ))}
           </ul>
+          <div className="space-y-2 font-mono text-xs text-muted-foreground">
+            <a href={`mailto:${profile.email}`} className="block text-primary">
+              {profile.email}
+            </a>
+            <p>{profile.location}</p>
+          </div>
         </div>
-      )}
-    </header>
+      </div>
+    </>
   );
 }
