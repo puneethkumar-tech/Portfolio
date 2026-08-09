@@ -4,7 +4,7 @@ B.E. Computer Science and Engineering student at Panimalar Engineering College, 
 
 ## 🌐 Portfolio
 
-Portfolio website — coming soon
+[View Live Portfolio →](https://puneethkumar-portfolio.vercel.app/)
 
 ## 👨‍💻 About Me
 
