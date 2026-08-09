@@ -77,11 +77,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Thatavarthi Puneeth Kumar — Portfolio" },
+      { title: "Thatavarthi Puneeth Kumar — Full Stack Developer" },
       {
         name: "description",
         content:
-          "Personal portfolio of Thatavarthi Puneeth Kumar, Computer Science student and full stack developer.",
+          "Computer Science student and aspiring Full Stack AI Developer building practical web applications and exploring modern software technologies.",
       },
       { name: "author", content: "Thatavarthi Puneeth Kumar" },
       { property: "og:site_name", content: "Thatavarthi Puneeth Kumar" },

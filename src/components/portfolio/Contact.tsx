@@ -18,7 +18,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-28 overflow-hidden border-t border-hairline px-5 py-28 sm:py-40"
+      className="relative overflow-hidden border-t border-hairline px-5 py-28 sm:py-40"
     >
       <div
         aria-hidden="true"
@@ -52,7 +52,10 @@ export function Contact() {
         <Reveal delay={200} className="mt-16 border-t border-hairline">
           <ul className="grid sm:grid-cols-3">
             {channels.map(({ label, value, href, icon: Icon }) => (
-              <li key={label} className="border-b border-hairline sm:border-b-0 sm:border-r sm:last:border-r-0">
+              <li
+                key={label}
+                className="border-b border-hairline sm:border-b-0 sm:border-r sm:last:border-r-0"
+              >
                 <a
                   href={href}
                   target={href.startsWith("http") ? "_blank" : undefined}

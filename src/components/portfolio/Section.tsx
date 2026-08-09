@@ -25,7 +25,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={cn("relative scroll-mt-28 border-t border-hairline px-5 py-20 sm:py-28", className)}
+      className={cn("relative border-t border-hairline px-5 py-20 sm:py-28", className)}
     >
       <div className={cn("mx-auto", wide ? "max-w-7xl" : "max-w-6xl")}>
         <div className="grid gap-10 lg:grid-cols-[10rem_minmax(0,1fr)] lg:gap-14">

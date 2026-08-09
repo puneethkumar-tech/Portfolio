@@ -1,26 +1,24 @@
 import { useEffect, useRef, useState } from "react";
-
-const statement = "Student now. Building like it's production.";
-const words = statement.split(" ");
+import { AnimatedText } from "./AnimatedText";
 
 export function Statement() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const [lineShown, setLineShown] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
+    const el = lineRef.current;
     if (!el || typeof IntersectionObserver === "undefined") {
-      setShown(true);
+      setLineShown(true);
       return;
     }
     const io = new IntersectionObserver(
       ([e]) => {
         if (e?.isIntersecting) {
-          setShown(true);
+          setLineShown(true);
           io.disconnect();
         }
       },
-      { threshold: 0.35 },
+      { threshold: 0.4 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -28,7 +26,6 @@ export function Statement() {
 
   return (
     <section
-      ref={ref}
       aria-label="Statement"
       className="relative overflow-hidden border-y border-hairline px-5 py-24 sm:py-32"
     >
@@ -37,27 +34,19 @@ export function Statement() {
           00 / Statement
         </p>
 
-        <h2 className="mt-8 max-w-4xl font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
-          {words.map((w, i) => (
-            <span key={`${w}-${i}`} className="inline-block overflow-hidden pb-1 pr-[0.22em]">
-              <span
-                className={`inline-block transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
-                  shown ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
-                } ${i >= 2 ? "text-ember" : ""}`}
-                style={{ transitionDelay: `${i * 90}ms` }}
-              >
-                {w}
-              </span>
-            </span>
-          ))}
+        <h2
+          aria-label="Student now. Building like it's production."
+          className="mt-8 max-w-4xl font-display text-4xl font-semibold leading-[1.02] tracking-[-0.04em] sm:text-6xl lg:text-7xl"
+        >
+          <AnimatedText text="Student now. Building like it's production." highlightFrom={2} />
         </h2>
 
-        <div className="mt-12 grid gap-8 border-t border-hairline pt-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+        <div className="relative mt-12 grid gap-8 border-t border-hairline pt-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
           <div
-            className={`h-px w-full origin-left bg-gradient-to-r from-primary via-accent to-transparent transition-transform duration-[1400ms] ease-out md:col-span-2 md:-mt-8 ${
-              shown ? "scale-x-100" : "scale-x-0"
-            }`}
+            ref={lineRef}
             aria-hidden="true"
+            className="absolute -mt-8 left-0 right-0 h-px w-full origin-left bg-gradient-to-r from-primary via-accent to-transparent transition-transform duration-[1400ms] ease-out"
+            style={lineShown ? { transform: "scaleX(1)" } : { transform: "scaleX(0)" }}
           />
           <p className="font-display text-xl leading-snug text-foreground sm:text-2xl">
             Every project ships with authentication, real data, and a deployment story.

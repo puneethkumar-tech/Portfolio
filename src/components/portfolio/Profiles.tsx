@@ -35,7 +35,10 @@ export function Profiles() {
 
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
               {focusAreas.map((f) => (
-                <li key={f} className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary">
+                <li
+                  key={f}
+                  className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary"
+                >
                   {f}
                 </li>
               ))}

@@ -1,6 +1,7 @@
-import { achievements, certifications, education } from "@/lib/portfolio-data";
+import { certifications, education, participation } from "@/lib/portfolio-data";
 import { Section } from "./Section";
 import { Reveal } from "./Reveal";
+import { CertificateLink } from "./CertificateLink";
 
 export function Education() {
   return (
@@ -28,7 +29,7 @@ export function Education() {
         </div>
       </Reveal>
 
-      <div className="mt-10 grid gap-10 md:grid-cols-2">
+      <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
         <Reveal delay={80}>
           <h3 className="font-mono text-[11px] uppercase tracking-[0.24em] text-primary">
             Certifications
@@ -36,13 +37,30 @@ export function Education() {
           <ul className="mt-5 border-t border-hairline">
             {certifications.map((c) => (
               <li
-                key={c.provider}
-                className="flex items-baseline justify-between gap-4 border-b border-hairline py-4"
+                key={c.provider || c.course}
+                className="border-b border-hairline py-6 transition-colors duration-300 hover:bg-surface-strong/50"
               >
-                <span className="font-display text-lg">{c.provider}</span>
-                <span className="text-right font-mono text-[11px] text-muted-foreground">
-                  {c.note}
-                </span>
+                <div className="grid gap-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-8">
+                  <div className="min-w-0">
+                    {c.provider && (
+                      <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-primary">
+                        {c.provider}
+                      </p>
+                    )}
+                    <h4 className="mt-1.5 font-display text-xl leading-snug sm:text-2xl">
+                      {c.comingSoon ? "Course details coming soon" : c.course}
+                    </h4>
+                    {c.detail && (
+                      <p className="mt-2 font-mono text-xs text-muted-foreground">{c.detail}</p>
+                    )}
+                    {c.date && (
+                      <p className="mt-1 font-mono text-[11px] text-muted-foreground/70">
+                        {c.date}
+                      </p>
+                    )}
+                  </div>
+                  {c.url && <CertificateLink href={c.url} label="View Certificate" />}
+                </div>
               </li>
             ))}
           </ul>
@@ -52,16 +70,28 @@ export function Education() {
           <h3 className="font-mono text-[11px] uppercase tracking-[0.24em] text-primary">
             Participation
           </h3>
-          <ul className="mt-5 border-t border-hairline">
-            {achievements.map((a) => (
-              <li
-                key={a}
-                className="border-b border-hairline py-4 text-sm leading-relaxed text-muted-foreground"
-              >
-                {a}
-              </li>
-            ))}
-          </ul>
+          <div className="mt-5 border-t border-hairline">
+            <p className="border-b border-hairline py-4 text-sm leading-relaxed text-muted-foreground">
+              {participation.summary}
+            </p>
+            {participation.items.length > 0 ? (
+              <ul>
+                {participation.items.map((a) => (
+                  <li
+                    key={a.title}
+                    className="border-b border-hairline py-4 text-sm leading-relaxed text-muted-foreground"
+                  >
+                    <span className="font-display text-base text-foreground">{a.title}</span>
+                    {a.note && <p className="mt-1">{a.note}</p>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="py-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground/70">
+                Event names & outcomes to be added
+              </p>
+            )}
+          </div>
         </Reveal>
       </div>
     </Section>

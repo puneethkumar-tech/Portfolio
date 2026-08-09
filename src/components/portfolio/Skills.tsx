@@ -7,7 +7,7 @@ export function Skills() {
     <Section
       id="skills"
       index="03"
-      eyebrow="Stack"
+      eyebrow="Skills"
       title="The tools I reach for"
       description="Grouped by area, never rated with invented percentages. Some I use daily, others I'm still getting comfortable with."
     >

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { experience } from "@/lib/portfolio-data";
 import { Section } from "./Section";
 import { Reveal } from "./Reveal";
+import { CertificateLink } from "./CertificateLink";
 
 export function Experience() {
   const ref = useRef<HTMLOListElement>(null);
@@ -60,6 +61,9 @@ export function Experience() {
             </span>
 
             <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground/70">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               <h3 className="font-display text-2xl leading-tight sm:text-3xl">{item.role}</h3>
               <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                 {item.duration}
@@ -73,6 +77,13 @@ export function Experience() {
                 <li key={p}>{p}</li>
               ))}
             </ul>
+            {item.certificateUrl && (
+              <CertificateLink
+                href={item.certificateUrl}
+                label="View Internship Certificate"
+                className="mt-6"
+              />
+            )}
           </Reveal>
         ))}
       </ol>

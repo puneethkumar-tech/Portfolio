@@ -47,9 +47,7 @@ export function About() {
                   {r.period}
                 </span>
                 <div className="min-w-0">
-                  <p className="font-display text-base font-medium text-foreground">
-                    {r.title}
-                  </p>
+                  <p className="font-display text-base font-medium text-foreground">{r.title}</p>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{r.detail}</p>
                 </div>
                 <span className="sr-only">{i + 1}</span>

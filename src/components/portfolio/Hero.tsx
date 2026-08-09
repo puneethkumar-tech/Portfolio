@@ -1,16 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import { ArrowDownRight, ArrowUpRight, Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  Download,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+} from "lucide-react";
 import { profile } from "@/lib/portfolio-data";
 import { MagneticLink } from "./MagneticLink";
-
-const codeLines = [
-  { t: "const puneeth = {", c: "text-muted-foreground" },
-  { t: "  role: 'Full Stack Developer',", c: "text-foreground" },
-  { t: "  focus: ['React', 'Next.js', 'Node'],", c: "text-foreground" },
-  { t: "  building: 'AI-powered web apps',", c: "text-primary" },
-  { t: "  status: 'shipping'", c: "text-foreground" },
-  { t: "}", c: "text-muted-foreground" },
-];
 
 /** Portrait module — a designed frame that later accepts a real photo. */
 function PortraitModule() {
@@ -40,21 +39,35 @@ function PortraitModule() {
             className="relative h-full w-full object-cover"
           />
         ) : (
-          <div className="relative flex h-full flex-col justify-between p-5">
+          <div className="relative flex h-full flex-col justify-between p-6">
             <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
               <span>Portrait</span>
-              <span className="text-primary">01</span>
+              <span className="text-primary">TP—01</span>
             </div>
-            <div className="space-y-2 font-mono text-[11px] leading-relaxed">
-              {codeLines.map((l) => (
-                <p key={l.t} className={l.c}>
-                  {l.t}
-                </p>
-              ))}
+
+            <div className="text-center">
+              <div
+                aria-hidden="true"
+                className="text-gradient mx-auto font-display text-[5.5rem] font-bold leading-none tracking-[-0.05em] sm:text-[6.5rem]"
+              >
+                P
+              </div>
+              <div
+                aria-hidden="true"
+                className="mx-auto mt-3 h-px w-16 bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+              />
+              <p className="mt-4 font-display text-lg font-semibold leading-tight tracking-tight text-foreground">
+                {profile.name}
+              </p>
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                CSE · Full Stack Developer
+              </p>
             </div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-              Photo to be added
-            </p>
+
+            <div className="flex items-end justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              <span>{profile.locationShort}</span>
+              <span className="text-primary">2029</span>
+            </div>
           </div>
         )}
         <span
@@ -68,7 +81,6 @@ function PortraitModule() {
 
 export function Hero() {
   const [mounted, setMounted] = useState(false);
-  const nameRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -91,14 +103,11 @@ export function Hero() {
                 {profile.status}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <MapPin className="h-3 w-3" /> Kandukuru, AP · India
+                <MapPin className="h-3 w-3" /> {profile.locationShort}
               </span>
             </div>
 
-            <h1
-              ref={nameRef}
-              className="mt-8 font-display text-[13vw] font-bold leading-[0.86] tracking-[-0.045em] sm:text-[9vw] lg:text-[6.4rem]"
-            >
+            <h1 className="mt-8 font-display text-[13vw] font-bold leading-[0.86] tracking-[-0.045em] sm:text-[9vw] lg:text-[6.4rem]">
               {lines.map((line, i) => (
                 <span key={line} className="block overflow-hidden">
                   <span
@@ -120,7 +129,7 @@ export function Hero() {
               style={{ animationDelay: "620ms" }}
             >
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-primary">
-                Computer Science Student · Full Stack Developer
+                {profile.title}
               </p>
               <p className="max-w-sm text-base leading-relaxed text-muted-foreground">
                 {profile.tagline}

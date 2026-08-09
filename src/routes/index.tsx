@@ -12,9 +12,9 @@ import { Profiles } from "@/components/portfolio/Profiles";
 import { Contact } from "@/components/portfolio/Contact";
 import { Footer } from "@/components/portfolio/Footer";
 
-const title = "Thatavarthi Puneeth Kumar — CS Student & Full Stack Developer";
+const title = "Thatavarthi Puneeth Kumar — Full Stack Developer";
 const description =
-  "Portfolio of Thatavarthi Puneeth Kumar, a B.E. Computer Science student at Panimalar Engineering College building practical AI-powered full stack web applications.";
+  "Computer Science student and aspiring Full Stack AI Developer building practical web applications and exploring modern software technologies.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,15 +24,18 @@ export const Route = createFileRoute("/")({
       {
         name: "keywords",
         content:
-          "Thatavarthi Puneeth Kumar, Computer Science Student, Full Stack Developer, AI Developer, Panimalar Engineering College, Andhra Pradesh, React, Next.js",
+          "Thatavarthi Puneeth Kumar, Puneeth Kumar, Computer Science Student, Full Stack Developer, Full Stack AI Developer, AI Developer, Panimalar Engineering College, Andhra Pradesh, React, Next.js, FastAPI",
       },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "profile" },
       { property: "og:url", content: "/" },
+      { property: "og:locale", content: "en_US" },
+      { property: "og:site_name", content: "Thatavarthi Puneeth Kumar" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
+      { name: "twitter:creator", content: "@puneethkumar-tech" },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),

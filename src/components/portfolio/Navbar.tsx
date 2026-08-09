@@ -63,7 +63,7 @@ export function Navbar() {
             </span>
             <span className="truncate font-display text-sm font-semibold tracking-tight">
               {profile.shortName}
-              <span className="text-muted-foreground">.dev</span>
+              <span className="text-muted-foreground"> Kumar</span>
             </span>
           </a>
 
@@ -72,6 +72,7 @@ export function Navbar() {
               <li key={item.href}>
                 <a
                   href={item.href}
+                  aria-current={active === item.href ? "true" : undefined}
                   className={cn(
                     "relative py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground",
                     active === item.href && "text-foreground",
@@ -111,6 +112,7 @@ export function Navbar() {
 
       {/* Mobile overlay navigation */}
       <div
+        inert={!open}
         className={cn(
           "fixed inset-0 z-40 bg-background/95 backdrop-blur-2xl transition-all duration-500 md:hidden",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
@@ -129,9 +131,7 @@ export function Navbar() {
                     open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
                   )}
                 >
-                  <span className="font-mono text-[11px] text-primary">
-                    0{i + 1}
-                  </span>
+                  <span className="font-mono text-[11px] text-primary">0{i + 1}</span>
                   {item.label}
                 </a>
               </li>
