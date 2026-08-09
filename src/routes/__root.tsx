@@ -90,6 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#0b0b0d" },
     ],
     links: [
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon", fetchpriority: "high" },
       {
         rel: "stylesheet",
         href: appCss,
@@ -100,8 +101,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
       },
-
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
 
