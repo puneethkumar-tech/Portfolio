@@ -1,6 +1,13 @@
 # Agent workspace
 .commandcode/
 
+# Lovable platform metadata
+.lovable/
+
+# Environment variables
+.env
+.env.*
+
 # Logs
 logs
 *.log
